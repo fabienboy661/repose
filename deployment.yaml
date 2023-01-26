@@ -1,9 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deployment
-  spec:
-  replicas: 1
+  name: react-app
+---
+spec:
+  replicas: 2
   selector:
     matchLabels:
       app: react-app
@@ -28,8 +29,7 @@ spec:
   selector:
     app: react-app
   ports:
-    - name : my-app
-    - port: 3000
+    - port: 80
       protocol: TCP
       targetPort: 80
-      nodePort: 3000
+      nodePort: 31000
