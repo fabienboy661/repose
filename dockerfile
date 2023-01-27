@@ -11,6 +11,3 @@ RUN npm install
 COPY ./ ./
 # run the app
 CMD ["npm", "start"]
-
-FROM nginx:alpine
-COPY build/ /usr/share/nginx/html
