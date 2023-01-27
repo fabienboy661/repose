@@ -1,38 +1,37 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-name: deployment
-labels:
-  app: myreact-app
+  name: react-app
 spec:
-strategy:
-  type: Recreate
-template:
-  metadata:
-    labels:
-      app: myreact-app
-      tier: myreact-app
-  spec:
-    containers:
-    - name: myreact-app
-      image: fabien123/jenkins_project:latest
-      imagePullPolicy: Always
-      ports:
-      - containerPort: 3000
-        name: myreact-app
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react-app
+  template:
+    metadata:
+      labels:
+        app: react-app
+    spec:
+      containers:
+        - name: react-app
+          image: fabien123/jenkins_project:latest
+          imagePullPolicy: Always
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-name: myreact-app
-labels:
-  app: myreact-app
+  name: react-app
 spec:
-ports:
-  - port: 3000
-    targetPort: 3000
+  type: NodePort
+  selector:
+    app: react-app
+  ports:
+    - name: app-my
+      port: 3000
+      targetPort: 3000
 selector:
-  app: myreact-app
-  tier: myreact-app
+  app: react-app
+  tier: react-app
 type: LoadBalancer
