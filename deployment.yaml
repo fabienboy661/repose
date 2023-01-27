@@ -17,6 +17,8 @@ spec:
         - name: react-app
           image: fabien123/jenkins_project:latest
           imagePullPolicy: Always
+          ports:
+            - containerPort: 80
 
 ---
 apiVersion: v1
@@ -28,6 +30,7 @@ spec:
   selector:
     app: react-app
   ports:
-    - name: app-my
-      port: 3000
-      targetPort: 3000
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      nodePort: 31000
