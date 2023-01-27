@@ -1,38 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-name: hello
+name: deployment
 labels:
-  app: hello
+  app: myreact-app
 spec:
 strategy:
   type: Recreate
 template:
   metadata:
     labels:
-      app: hello
-      tier: hello
+      app: myreact-app
+      tier: myreact-app
   spec:
     containers:
-    - name: hello
+    - name: myreact-app
       image: fabien123/jenkins_project:latest
       imagePullPolicy: Always
       ports:
       - containerPort: 3000
-        name: hello
+        name: myreact-app
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-name: hello
+name: myreact-app
 labels:
-  app: hello
+  app: myreact-app
 spec:
 ports:
   - port: 3000
     targetPort: 3000
 selector:
-  app: hello
-  tier: hello
+  app: myreact-app
+  tier: myreact-app
 type: LoadBalancer
