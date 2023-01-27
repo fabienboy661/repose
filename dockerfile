@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY . . 
 
-RUN npm build
+RUN npm install
 
 FROM nginx:apline
 
