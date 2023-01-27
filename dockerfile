@@ -2,12 +2,15 @@
 FROM node:alpine
 # set the working directory
 WORKDIR /app
-# copy package files
-COPY package.json ./
-COPY package-lock.json ./
-# install dependencies
-RUN npm install
-# copy everything to /app directory
-COPY ./ ./
-# run the app
-CMD ["npm", "start"]
+
+COPY . . 
+
+RUN npm build
+
+FROM nginx:apline
+
+WORKDIR /usr/share/nginx/html
+
+COPY --from=builder /app/build .
+
+CMD [ "gnix", "-g", "deamin off;" ]
