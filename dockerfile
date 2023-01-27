@@ -11,6 +11,6 @@ FROM nginx:apline
 
 WORKDIR /usr/share/nginx/html
 
-COPY --from=builder /app/build .
+COPY --from=stage /app/build .
 
 CMD [ "gnix", "-g", "deamin off;" ]
