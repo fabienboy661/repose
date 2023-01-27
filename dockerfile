@@ -9,8 +9,5 @@ COPY package-lock.json ./
 RUN npm install
 # copy everything to /app directory
 COPY ./ ./
-
-ENV PORT 3000
-EXPOSE 3000
 # run the app
 CMD ["npm", "start"]
