@@ -1,31 +1,33 @@
+---
 apiVersion: apps/v1
-kind: Deployement
+kind: Deployment
 metadata:
-  name: deployment
+  name: react-app
 spec:
+  replicas: 1
   selector:
-    matchLables:
-      app: react-apps
-    replicate : 1
-    template:
-      metedata:
-        labels:
-          app: react-app
-      spec:
-        containers:
-          - name: react-app
-            image: fabien123/jenkins_project:latest
+    matchLabels:
+      app: react-app
+  template:
+    metadata:
+      labels:
+        app: react-app
+    spec:
+      containers:
+        - name: react-app
+          image: fabien123/jenkins_project:latest
+          imagePullPolicy: Always
 
 ---
 apiVersion: v1
 kind: Service
-metadata: 
-  name: my-react-app-srv
-spec: 
+metadata:
+  name: react-app
+spec:
   type: NodePort
   selector:
     app: react-app
   ports:
-    - name: my-app
+    - name: app-my
       port: 3000
       targetPort: 3000
