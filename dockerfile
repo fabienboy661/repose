@@ -10,6 +10,6 @@ RUN npm install
 # copy everything to /app directory
 COPY ./ ./
 # run the app
-ENV PORT 3000
-EXPOSE 3000
+ENV PORT 5000
+EXPOSE 5000
 CMD ["npm", "start"]
