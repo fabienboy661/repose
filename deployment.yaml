@@ -2,35 +2,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
- name: myapp-react
- labels:
-  app: myapp-react
+  name: react-app
 spec:
- replicas: 1
- selector:
-  matchLabels:
-   app: myapp-react
- template:
-  metadata: 
-   labels:
-    app: myapp-react
-  spec:
-   containers:
-   - name: myapp-react
-     image: fabien123/jenkins_project:tagversion
-     ports:
-     - containerPort: 8080
-
+  replicas: 2
+  selector:
+    matchLabels:
+      app: react-app
+  template:
+    metadata:
+      labels:
+        app: react-app
+    spec:
+      containers:
+        - name: react-app
+          image: fabien123/jenkins_project:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: myapp-react
+  name: react-app
 spec:
-  type: LoadBalancer
+  type: NodePort
   selector:
-    app: myapp-react
+    app: react-app
   ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 8080
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+      nodePort: 31000
