@@ -2,35 +2,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: react-app
+name: hello
+labels:
+  app: hello
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: react-app
-  template:
-    metadata:
-      labels:
-        app: react-app
-    spec:
-      containers:
-        - name: react-app
-          image: fabien123/jenkins_project:latest
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 80
+strategy:
+  type: Recreate
+template:
+  metadata:
+    labels:
+      app: hello
+      tier: hello
+  spec:
+    containers:
+    - name: hello
+      image: fabien123/jenkins_project:latest
+      imagePullPolicy: Always
+      ports:
+      - containerPort: 3000
+        name: hello
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: react-app
+name: hello
+labels:
+  app: hello
 spec:
-  type: NodePort
-  selector:
-    app: react-app
-  ports:
-    - port: 80
-      protocol: TCP
-      targetPort: 80
-      nodePort: 31000
+ports:
+  - port: 3000
+    targetPort: 3000
+selector:
+  app: hello
+  tier: hello
+type: LoadBalancer
